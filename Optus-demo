@@ -1,0 +1,15 @@
+optus-customer-portal-mock/
+  package.json
+  src/
+    app/
+      app.module.ts
+      app.component.ts
+      app-routing.module.ts
+      dashboard/
+        dashboard.component.ts
+        dashboard.component.html
+      billing/
+        billing.component.ts
+        billing.component.html
+      account/
+        account.component.ts
