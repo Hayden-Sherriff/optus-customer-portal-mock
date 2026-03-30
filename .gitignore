@@ -1,0 +1,18 @@
+# Dependencies
+/node_modules
+
+# Build output
+/dist
+
+# IDEs
+/.idea
+/.vscode
+*.swp
+*.swo
+
+# System
+.DS_Store
+Thumbs.db
+
+# Angular cache
+/.angular
