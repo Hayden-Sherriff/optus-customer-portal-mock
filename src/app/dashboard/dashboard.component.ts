@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map, tap, catchError } from 'rxjs/operators';
-
+import { AsyncPipe } from '@angular/common';
+import { Observable, of } from 'rxjs';
+import { map, tap, catchError } from 'rxjs';
 
 export interface UserPlan {
   name: string;
@@ -11,29 +11,28 @@ export interface UserPlan {
   expiry: string;
 }
 
-
 @Component({
   selector: 'app-dashboard',
+  standalone: true,
+  imports: [AsyncPipe],
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {
-  plans$: Observable<UserPlan[]>;
+  plans$!: Observable<UserPlan[]>;
   isLoading = true;
   hasError = false;
   userName = '';
 
-
   constructor(private http: HttpClient) {}
-
 
   ngOnInit(): void {
     this.plans$ = this.http.get<UserPlan[]>('/api/plans').pipe(
-      tap(() => this.isLoading = false),
-      map(plans => plans.filter(p => p.expiry !== 'expired')),
-      catchError(err => {
+      tap(() => (this.isLoading = false)),
+      map((plans) => plans.filter((p) => p.expiry !== 'expired')),
+      catchError((err) => {
         this.hasError = true;
         this.isLoading = false;
-        throw err;
+        return of([] as UserPlan[]);
       })
     );
   }

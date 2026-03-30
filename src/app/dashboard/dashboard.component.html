@@ -1,0 +1,27 @@
+<!-- dashboard.component.html (Angular 18 — uses @if and @for control flow) -->
+<div class="dashboard-container">
+  @if (isLoading) {
+    <div class="loading-spinner">
+      Loading your plans...
+    </div>
+  }
+
+  @if (hasError) {
+    <div class="error-banner">
+      Unable to load your plans. Please try again.
+    </div>
+  }
+
+  @if (!isLoading && !hasError) {
+    <div class="plans-grid">
+      @for (plan of plans$ | async; track plan.name) {
+        <div class="plan-card">
+          <h3>{{ plan.name }}</h3>
+          <p>Data: {{ plan.data }}</p>
+          <p>Calls: {{ plan.calls }}</p>
+          <p>Expires: {{ plan.expiry }}</p>
+        </div>
+      }
+    </div>
+  }
+</div>
